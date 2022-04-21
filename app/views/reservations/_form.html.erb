@@ -18,9 +18,16 @@
 		</div>
 	</div>
 
+
 	<%= f.hidden_field :room_id, value: @room.id %>
 	<%= f.hidden_field :price, value: @room.price %>
-	<%= f.hidden_field :total, id: 'reservation_total' %>
+	<%= f.hidden_field :total, value: 'reservation_total' %>
+	<%= f.hidden_field :service_fee, value: 'services_fee' %>
+	<%= f.hidden_field :owner_id, value: @room.user_id %>
+	<%= f.hidden_field :total_months, value: 3 %>
+	<%= f.hidden_field :booking_status, value: 'PENDING' %>
+
+
 
 
 	<h4><span id="message"></span></h4>
@@ -38,7 +45,7 @@
 				</tr>
 				<tr>
 					<td>Total</td>
-					<td>$<span id="reservation_sum"></span></td>
+					<td>$<span id="reservation_total_sum"></span></td>
 				</tr>
 			</tbody>
 		</table>
@@ -123,9 +130,12 @@
 										var serv_fee = <%= @room.price %> * 0.25;
 										total = <%= @room.price %> + serv_fee;
 
+
 										$('#reservation_month').text(first_month);
 										$('#reservation_serv_fee').text(serv_fee);
-										$('#reservation_sum').text(total);
+										$('#reservation_total_sum').val(total);
+										$('#reservation_total').val(total); // This is for hidden field reservation total
+										$('#reservation_service_fee').val(serv_fee); // This is for hidden field reservation total
 									}
 								}
 							});
@@ -180,7 +190,10 @@
 
 									$('#reservation_month').text(first_month);
 									$('#reservation_serv_fee').text(serv_fee);
-									$('#reservation_sum').text(total);
+									$('#reservation_total_sum').text(total);
+									$('#reservation_total').val(total);
+									$('#reservation_service_fee').val(serv_fee);
+
 								}
 							}
 						});

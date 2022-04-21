@@ -1,7 +1,8 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:show]
-
+  #load_and_authorize_resource
+  
   def index
     @rooms = current_user.rooms
   end
@@ -21,7 +22,6 @@ class RoomsController < ApplicationController
 
   def create
     @room = current_user.rooms.build(room_params)
-
     if @room.save
 
       if params[:images]
@@ -67,14 +67,14 @@ class RoomsController < ApplicationController
       @room.destroy
     end
     redirect_to root_url
-end
+  end
 
   private
-    def set_room
-      @room = Room.find(params[:id])
-    end
+  def set_room
+    @room = Room.find(params[:id])
+  end
 
-    def room_params
-      params.require(:room).permit(:home_type, :room_type, :accommodate, :bed_room, :bath_room, :listing_name, :summary, :address, :is_tv, :is_kitchen, :is_air, :is_heating, :is_internet, :price, :active)
-    end
+  def room_params
+    params.require(:room).permit(:home_type, :room_type, :accommodate, :bed_room, :bath_room, :listing_name, :summary, :address, :is_tv, :is_kitchen, :is_air, :is_heating, :is_internet, :price, :active)
+  end
 end

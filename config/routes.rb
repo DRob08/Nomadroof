@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
 
+  resources :roles
+  resources :user_steps
   root 'pages#home'
 
-  devise_for 	:users, 
-  						:path => '', 
+  devise_for 	:users,
+  						:path => '',
   						:path_names => {:sign_in => 'login', :sign_out => 'logout', :edit => 'profile'},
   						:controllers => {:omniauth_callbacks => 'omniauth_callbacks',
   														 :registrations => 'registrations'
   														}
+  scope '/admin' do
+    resources :users
+  end
 
   resources :users, only: [:show]
   resources :rooms

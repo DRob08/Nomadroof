@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_12_175124) do
+ActiveRecord::Schema.define(version: 2022_04_18_234843) do
 
   create_table "conversations", force: :cascade do |t|
     t.integer "sender_id"
@@ -42,11 +42,15 @@ ActiveRecord::Schema.define(version: 2022_04_12_175124) do
     t.integer "room_id"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "price"
-    t.integer "total"
+    t.float "price"
+    t.float "total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "status"
+    t.string "booking_status"
+    t.integer "owner_id"
+    t.float "total_months"
+    t.float "service_fee"
     t.index ["room_id"], name: "index_reservations_on_room_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
@@ -60,6 +64,13 @@ ActiveRecord::Schema.define(version: 2022_04_12_175124) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_reviews_on_room_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -110,9 +121,12 @@ ActiveRecord::Schema.define(version: 2022_04_12_175124) do
     t.text "description"
     t.string "first_name"
     t.string "last_name"
+    t.integer "role_id"
+    t.string "avatar"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "messages", "conversations"
@@ -123,4 +137,5 @@ ActiveRecord::Schema.define(version: 2022_04_12_175124) do
   add_foreign_key "reviews", "rooms"
   add_foreign_key "reviews", "users"
   add_foreign_key "rooms", "users"
+  add_foreign_key "users", "roles"
 end

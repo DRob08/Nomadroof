@@ -6,6 +6,8 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  config.serve_static_assets = true
+
   # Do not eager load code on boot.
   config.eager_load = false
 
@@ -38,6 +40,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+   config.asset_host = 'http://localhost:3000'
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 

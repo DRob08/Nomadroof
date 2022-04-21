@@ -21,6 +21,10 @@
       </div>
 
       <div class="form-group">
+        <%= collection_select(:user, :role_id, Role.all, :id, :name, { prompt: "Select your role" }) %>
+      </div>
+
+      <div class="form-group">
         <%= f.email_field :email, :class => 'form-control', :placeholder => 'Email' %>
       </div>
 

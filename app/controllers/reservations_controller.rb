@@ -1,12 +1,12 @@
 class ReservationsController < ApplicationController
-	before_action :authenticate_user!, except: [:notify]
+	#before_action :authenticate_user!, except: [:notify]
 
 	def preload
 		room = Room.find(params[:room_id])
 		today = Date.today
 		reservations = room.reservations.where("start_date >= ? OR end_date >= ?", today, today)
 
-		render json: reservations	
+		render json: reservations
 	end
 
 	def preview
@@ -21,26 +21,34 @@ class ReservationsController < ApplicationController
 	end
 
 	def create
-		@reservation = current_user.reservations.create(reservation_params)
-
-		if @reservation
-			# send request to PayPal
-			values = {
-				business: 'demo.code4startup-facilitator@gmail.com',
-				cmd: '_xclick',
-				upload: 1,
-				notify_url: 'http://22ee1588.ngrok.io/notify',
-				amount: @reservation.total,
-				item_name: @reservation.room.listing_name,
-				item_number: @reservation.id,
-				quantity: '1',
-				return: 'http://22ee1588.ngrok.io/your_trips'
-			}
-
-			redirect_to "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
+		if !user_signed_in?
+			redirect_to new_user_session_path
 		else
-			redirect_to @reservation.room, alert: "Oops, something went wrong..."
-		end 
+			if current_user.phone_number.nil?
+				redirect_to edit_user_registration_path, alert: "You need to fill out profile!"
+			else
+				@reservation = current_user.reservations.create(reservation_params)
+
+				if @reservation
+					# send request to PayPal
+					values = {
+						business: 'Darwin.Robinson8-facilitator@gmail.com',
+						cmd: '_xclick',
+						upload: 1,
+						notify_url: 'http://22ee1588.ngrok.io/notify',
+						amount: @reservation.total,
+						item_name: @reservation.room.listing_name,
+						item_number: @reservation.id,
+						quantity: '1',
+						return: 'http://22ee1588.ngrok.io/your_trips'
+					}
+
+					# redirect_to "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
+				else
+					redirect_to @reservation.room, alert: "Oops, something went wrong..."
+				end
+			end
+		end
 	end
 
 	protect_from_forgery except: [:notify]
@@ -50,7 +58,7 @@ class ReservationsController < ApplicationController
 
 		reservation = Reservation.find(params[:item_number])
 
-		if status = "Completed"
+		if status == "Completed"
 			reservation.update_attributes status: true
 		else
 			reservation.destroy
@@ -77,6 +85,6 @@ class ReservationsController < ApplicationController
 		end
 
 		def reservation_params
-			params.require(:reservation).permit(:start_date, :end_date, :price, :total, :room_id)
+			params.require(:reservation).permit(:start_date, :end_date, :price, :total, :room_id, :owner_id, :booking_status, :total_months, :service_fee)
 		end
 end

@@ -4,7 +4,7 @@
 	</div>
 	<div class="panel-body">
 		<div class="container">
-			
+
 			<%= form_for @room, :html => { multipart: true } do |f| %>
 
 				<div class="row">
@@ -87,8 +87,8 @@
 						<div class="form-group">
 							<%= f.check_box :is_air %> Air Conditioning
 						</div>
-					</div>	
-				</div>	
+					</div>
+				</div>
 
 				<div class="row">
 					<div class="col-md-4">
@@ -97,19 +97,19 @@
 							<div class="input-group">
 								<div class="input-group-addon">$</div>
 								<%= f.text_field :price, placeholder: "eg. $100", class: "form-control" %>
-							</div>	
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-md-4">
-						<div class="form-group">							
+						<div class="form-group">
 							<span class="btn btn-default btn-file">
-							    <i class="fa fa-cloud-upload fa-lg"></i> Upload Photos 
+							    <i class="fa fa-cloud-upload fa-lg"></i> Upload Photos
 							    <%= file_field_tag "images[]", type: :file, multiple: true %>
 							</span>
-						</div>		
+						</div>
 					</div>
 				</div>
 
