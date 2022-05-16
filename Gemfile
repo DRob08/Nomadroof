@@ -14,6 +14,7 @@ gem 'jbuilder', '~> 2.11', '>= 2.11.5'
 gem 'sdoc', '~> 2.3', '>= 2.3.1', group: :doc
 
 gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
+gem 'bootstrap', '~> 4.0.0'
 gem 'sass-rails', '~> 6.0'
 
 gem 'devise', '~> 4.8', '>= 4.8.1'
@@ -22,6 +23,7 @@ gem 'toastr-rails', '~> 1.0', '>= 1.0.3'
 
 gem 'omniauth', '~> 2.0', '>= 2.0.4'
 gem 'omniauth-facebook', '~> 9.0'
+gem 'omniauth-rails_csrf_protection'
 
 gem 'geocoder', '~> 1.7', '>= 1.7.5'
 
@@ -35,6 +37,9 @@ gem 'ransack', '~> 3.0'
 gem 'sprockets', '~>3.0'
 
 gem 'wicked'
+
+#gem 'country_select', '~> 6.0'
+gem 'country_select', git: 'https://github.com/DRob08/country_select.git'
 
 group :development, :test do
   gem 'byebug'

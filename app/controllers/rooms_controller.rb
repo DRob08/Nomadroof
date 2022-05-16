@@ -2,8 +2,9 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:show]
   #load_and_authorize_resource
-  
+
   def index
+
     @rooms = current_user.rooms
   end
 
@@ -17,7 +18,11 @@ class RoomsController < ApplicationController
   end
 
   def new
+    logger.debug "@@@@@@@ - NEW Rooms Controller"
+    @amenities = Amenity.all
+    logger.debug "Serch array= #{@amenities}"
     @room = current_user.rooms.build
+    @room.room_amenities.build
   end
 
   def create
@@ -75,6 +80,6 @@ class RoomsController < ApplicationController
   end
 
   def room_params
-    params.require(:room).permit(:home_type, :room_type, :accommodate, :bed_room, :bath_room, :listing_name, :summary, :address, :is_tv, :is_kitchen, :is_air, :is_heating, :is_internet, :price, :active)
+    params.require(:room).permit(:home_type, :room_type, :accommodate, :bed_room, :bath_room, :listing_name, :summary, :address, :is_tv, :is_kitchen, :is_air, :is_heating, :is_internet, :price, :active, :city, :postal_code, :country, :features, amenity_ids:[])
   end
 end

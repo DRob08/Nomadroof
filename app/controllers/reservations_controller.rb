@@ -44,12 +44,23 @@ class ReservationsController < ApplicationController
 					}
 
 					# redirect_to "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
+					redirect_to your_trips_path
+
 				else
 					redirect_to @reservation.room, alert: "Oops, something went wrong..."
 				end
 			end
 		end
 	end
+
+	def destroy
+    @reservation = Reservation.find(params[:id])
+
+    if @reservation.present?
+      @reservation.destroy
+    end
+    redirect_to your_trips_path
+  end
 
 	protect_from_forgery except: [:notify]
 	def notify
@@ -69,7 +80,8 @@ class ReservationsController < ApplicationController
 
 	protect_from_forgery except: [:your_trips]
 	def your_trips
-		@trips = current_user.reservations.where("status = ?", true)
+		#@trips = current_user.reservations.where("status = ?", true)
+		@trips = current_user.reservations.where("booking_status = ?", 'PENDING')
 	end
 
 	def your_reservations

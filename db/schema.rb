@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_18_234843) do
+ActiveRecord::Schema.define(version: 2022_05_11_225147) do
+
+  create_table "amenities", force: :cascade do |t|
+    t.string "name"
+    t.integer "popularity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "conversations", force: :cascade do |t|
     t.integer "sender_id"
@@ -73,6 +80,16 @@ ActiveRecord::Schema.define(version: 2022_04_18_234843) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "room_amenities", force: :cascade do |t|
+    t.integer "room_id"
+    t.integer "amenity_id"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["amenity_id"], name: "index_room_amenities_on_amenity_id"
+    t.index ["room_id"], name: "index_room_amenities_on_room_id"
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.string "home_type"
     t.string "room_type"
@@ -94,6 +111,10 @@ ActiveRecord::Schema.define(version: 2022_04_18_234843) do
     t.datetime "updated_at", precision: 6, null: false
     t.float "latitude"
     t.float "longitude"
+    t.string "city"
+    t.integer "postal_code"
+    t.string "country"
+    t.json "features"
     t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
@@ -136,6 +157,8 @@ ActiveRecord::Schema.define(version: 2022_04_18_234843) do
   add_foreign_key "reservations", "users"
   add_foreign_key "reviews", "rooms"
   add_foreign_key "reviews", "users"
+  add_foreign_key "room_amenities", "amenities"
+  add_foreign_key "room_amenities", "rooms"
   add_foreign_key "rooms", "users"
   add_foreign_key "users", "roles"
 end

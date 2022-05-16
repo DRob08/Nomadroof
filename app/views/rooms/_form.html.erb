@@ -68,6 +68,36 @@
 				</div>
 
 				<div class="row">
+					<div class="form-group">
+						<label>City</label>
+						<%= f.text_field :city, placeholder: "What City?", class: "form-control" %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group">
+						<label>Country</label>
+						<%= f.country_select :country, { priority_countries: ["Peru", "United States", "Colombia", "Ecuador"]} , placeholder: "What Country", selected: :country, class: "form-control" %>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="form-group">
+						<label>Zip Code</label>
+						<%= f.text_field :postal_code, placeholder: "Postal Code/Zip Code", class: "form-control" %>
+					</div>
+				</div>
+
+			<div class="row">
+				<%=  f.collection_check_boxes(:amenity_ids, Amenity.all, :id, :name) do |b| %>
+				<div class="col-md-4">
+						<div class="form-group" > <%= b.check_box %><%= b.label { b.text } %></div>
+				</div>
+				<% end %>
+			</div>
+
+				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
 							<%= f.check_box :is_tv %> TV

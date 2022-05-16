@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :amenities
   resources :roles
   resources :user_steps
   root 'pages#home'
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
   resources :photos
 
   resources :rooms do
-    resources :reservations, only: [:create]
+    resources :reservations, only: [:create, :destroy]
   end
 
   resources :conversations, only: [:index, :create] do
@@ -40,5 +41,7 @@ Rails.application.routes.draw do
   post '/your_trips' => 'reservations#your_trips'
 
   get '/search' => 'pages#search'
+
+  delete '/reservations/:id' => 'reservations#destroy' , as: :delete_reservation
 
 end

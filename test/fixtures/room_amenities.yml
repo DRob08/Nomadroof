@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  room: one
+  amenity: one
+  description: MyString
+
+two:
+  room: two
+  amenity: two
+  description: MyString
