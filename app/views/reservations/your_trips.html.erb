@@ -30,11 +30,28 @@
 						</div>
 						<div class="col-md-2 right">
 							<h4>$<%= trip.total %></h4>
-								<% if trip.booking_status = 'PENDING' %>
+								<% if trip.booking_status == 'pending' %>
 										<div class="actions">
 											<h4>PENDING- Waiting on HOST</h4>
 										</div>
 										<%= link_to 'Delete', delete_reservation_path(trip.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+								<% elsif trip.booking_status == 'accepted'%>
+
+										<div class="actions">
+											<h4>Choose Payment Method</h4>
+										</div>
+										<%= link_to 'Cancel Booking Request', delete_reservation_path(trip.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+								<% elsif trip.booking_status == 'paid'%>
+										<div class="actions">
+											<h4>Thank You for your Payment</h4>
+										</div>
+
+											<%= trip.room.user.phone_number %>
+											<%= trip.room.user.email %>
+								<% elsif trip.booking_status == 'canceled'%>
+										<div class="actions">
+											<h4>This booking request has been cancelled</h4>
+										</div>
 								<% end %>
 
 						</div>

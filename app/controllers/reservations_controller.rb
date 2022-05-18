@@ -1,11 +1,10 @@
 class ReservationsController < ApplicationController
-	#before_action :authenticate_user!, except: [:notify]
+	before_action :authenticate_user!, except: [:notify]
 
 	def preload
 		room = Room.find(params[:room_id])
 		today = Date.today
-		reservations = room.reservations.where("start_date >= ? OR end_date >= ?", today, today)
-
+		reservations = room.reservations.where("booking_status = ? AND (start_date >= ? OR end_date >= ?)", 3, today, today)
 		render json: reservations
 	end
 
@@ -42,10 +41,8 @@ class ReservationsController < ApplicationController
 						quantity: '1',
 						return: 'http://22ee1588.ngrok.io/your_trips'
 					}
-
 					# redirect_to "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
 					redirect_to your_trips_path
-
 				else
 					redirect_to @reservation.room, alert: "Oops, something went wrong..."
 				end
@@ -53,20 +50,32 @@ class ReservationsController < ApplicationController
 		end
 	end
 
+ def accept_reservation
+	 @reservation = Reservation.find(params[:id])
+	 if @reservation.present?
+		 @reservation.set_accepted
+		 @reservation.save
+		 flash[:notice] = "Accepted Booking Request"
+	 end
+	 redirect_back(fallback_location: root_path)
+ end
+
 	def destroy
     @reservation = Reservation.find(params[:id])
-
     if @reservation.present?
-      @reservation.destroy
+      #@reservation.destroy
+			#@reservation.booking_status = 'CANCELED'
+			@reservation.set_cancel
+			@reservation.save
+			flash[:notice] = "Booking canceled"
     end
-    redirect_to your_trips_path
+		redirect_back(fallback_location: root_path)
   end
 
 	protect_from_forgery except: [:notify]
 	def notify
 		params.permit!
 		status = params[:payment_status]
-
 		reservation = Reservation.find(params[:item_number])
 
 		if status == "Completed"
@@ -81,11 +90,12 @@ class ReservationsController < ApplicationController
 	protect_from_forgery except: [:your_trips]
 	def your_trips
 		#@trips = current_user.reservations.where("status = ?", true)
-		@trips = current_user.reservations.where("booking_status = ?", 'PENDING')
+		#@trips = current_user.reservations.where.not(booking_status: 'CANCELED')
+		@trips = current_user.reservations.order(created_at: :desc)
 	end
 
 	def your_reservations
-		@rooms = current_user.rooms
+		@rooms = current_user.rooms.order(created_at: :desc)
 	end
 
 	private

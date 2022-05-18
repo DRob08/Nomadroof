@@ -13,29 +13,65 @@
 			</div>
 			<div class="panel-body">
 				<% @rooms.each do |room| %>
-					
+
 					<% room.reservations.each do |reservation| %>
-						<% if reservation.status %>
+						<% # if reservation.status %>
 							<div class="row">
 								<div class="col-md-2">
-									<%= reservation.start_date.strftime('%v') %>
-								</div>	
+									FROM <%= reservation.start_date.strftime('%v') %>
+									TO
+									<%= reservation.end_date.strftime('%v') %>
+								</div>
 								<div class="col-md-6">
 									<%= link_to room_path(reservation.room) do %>
 										<%= image_tag reservation.room.photos[0].image.url(:thumb) if reservation.room.photos.length > 0 %>
+
 									<% end %>
-								</div>	
+								</div>
 								<div class="col-md-2">
 									<%= link_to user_path(reservation.user) do %>
 										<%= image_tag avatar_url(reservation.user), class: "img-circle avatar-medium" %>
-									<% end %>	
-								</div>	
+										<%= reservation.user.first_name %>
+									<% end %>
+										<% if reservation.booking_status == 'pending' %>
+												<div class="actions">
+													<h4>Waiting on You to Accept booking</h4>
+												</div>
+												<div class="actions">
+													<%= link_to 'Cancel Booking Request', delete_reservation_path(reservation.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+												</div>
+
+												<div class="actions">
+													<%= link_to 'Accept Booking Request', accept_booking_path(reservation.id), method: :put, data: { confirm: 'Are you sure?' }, class: "btn btn-success" %>
+												</div>
+
+										<% elsif reservation.booking_status == 'accepted' %>
+												<div class="actions">
+													<h4>Booking Accepted but You can still Cancel Request</h4>
+												</div>
+												<%= link_to 'Cancel Booking Request', delete_reservation_path(reservation.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+										<% elsif reservation.booking_status == 'paid'%>
+												<div class="actions">
+													<h4>Tenant Paid for Booking</h4>
+												</div>
+
+													<%= reservation.user.first_name %>
+													<%= reservation.user.email %>
+													<%= reservation.user.phone_number %>
+
+										<% elsif reservation.booking_status == 'canceled'%>
+												<div class="actions">
+													<h4>This booking request has been canceled</h4>
+												</div>
+										<% end %>
+
+								</div>
 								<div class="col-md-2 right">
 									<h4>$<%= reservation.total %></h4>
-								</div>	
+								</div>
 							</div>
 							<hr>
-						<% end %>
+						<% # end %>
 					<% end %>
 
 				<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_11_225147) do
+ActiveRecord::Schema.define(version: 2022_05_17_190542) do
 
   create_table "amenities", force: :cascade do |t|
     t.string "name"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2022_05_11_225147) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "status"
-    t.string "booking_status"
+    t.integer "booking_status", default: 0
     t.integer "owner_id"
     t.float "total_months"
     t.float "service_fee"

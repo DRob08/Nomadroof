@@ -11,9 +11,9 @@ Rails.application.routes.draw do
   						:controllers => {:omniauth_callbacks => 'omniauth_callbacks',
   														 :registrations => 'registrations'
   														}
-  scope '/admin' do
-    resources :users
-  end
+  # scope '/admin' do
+  #   resources :users
+  # end
 
   resources :users, only: [:show]
   resources :rooms
@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   post '/your_trips' => 'reservations#your_trips'
 
   get '/search' => 'pages#search'
+
+  put "/reservations/:id", to: "reservations#accept_reservation", as: :accept_booking
 
   delete '/reservations/:id' => 'reservations#destroy' , as: :delete_reservation
 
