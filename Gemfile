@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
-gem 'sqlite3', '~> 1.4'
+
 gem 'uglifier', '~> 4.2'
 gem 'coffee-rails', '~> 5.0'
 gem 'mimemagic', '~> 0.3.0'
@@ -49,6 +49,14 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+end
+
+group :production do
+  gem 'pg'
+end
+
+group :development, :test do
+  gem 'sqlite3', '~> 1.4'
 end
 
 gem "cancancan", "~> 3.3"
