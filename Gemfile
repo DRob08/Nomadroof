@@ -38,6 +38,10 @@ gem 'sprockets', '~>3.0'
 
 gem 'wicked'
 
+gem 'local_time'
+
+gem 'stripe-rails'
+
 #gem 'country_select', '~> 6.0'
 gem 'country_select', git: 'https://github.com/DRob08/country_select.git'
 

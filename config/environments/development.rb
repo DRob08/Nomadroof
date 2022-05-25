@@ -41,7 +41,10 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-   config.asset_host = 'http://localhost:3000'
+  config.asset_host = 'http://localhost:3000'
+
+  # config.stripe.secret_key = Rails.application.secrets.stripe_publishable_key
+  # config.stripe.publishable_key = Rails.application.secrets.stripe_secret_key
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 

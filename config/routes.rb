@@ -44,6 +44,10 @@ Rails.application.routes.draw do
 
   put "/reservations/:id", to: "reservations#accept_reservation", as: :accept_booking
 
+  #post "/reservations/:id", to: "reservations#submit", as: :submit_charge
+
+  post "/checkout/create", to: "checkout#create"
+
   delete '/reservations/:id' => 'reservations#destroy' , as: :delete_reservation
 
 end

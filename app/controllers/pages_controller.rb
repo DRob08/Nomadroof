@@ -42,13 +42,16 @@ class PagesController < ApplicationController
   		@rooms.each do |room|
 
   			not_available = room.reservations.where(
-  					"(? <= start_date AND start_date <= ?)
+  					"((? <= start_date AND start_date <= ?)
   					OR (? <= end_date AND end_date <= ?)
-  					OR (start_date < ? AND ? < end_date)",
+  					OR (start_date < ? AND ? < end_date)) AND booking_status = ?",
   					start_date, end_date,
   					start_date, end_date,
-  					start_date, end_date
+  					start_date, end_date,
+            3
   				).limit(1)
+
+        logger.debug "***** NOT AVAILABLE = #{not_available.length}"
 
   			if not_available.length > 0
   				@arrRooms.delete(room)

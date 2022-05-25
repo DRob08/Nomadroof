@@ -1,3 +1,4 @@
+<%= stripe_javascript_tag %>
 <div class="row">
 	<div class="col-md-3">
 		<ul class="sidebar-list">
@@ -40,6 +41,8 @@
 										<div class="actions">
 											<h4>Choose Payment Method</h4>
 										</div>
+
+										<%= button_to "Buy Now", checkout_create_path, params:{reservation_id: trip.id},  remote: true %>
 										<%= link_to 'Cancel Booking Request', delete_reservation_path(trip.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
 								<% elsif trip.booking_status == 'paid'%>
 										<div class="actions">

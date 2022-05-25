@@ -21,3 +21,9 @@
 
 en:
   hello: "Hello world"
+
+en:
+  stripe_rails:
+    elements:
+      label_text: Enter Credit Card Number
+      submit_button_text: Make Payment
