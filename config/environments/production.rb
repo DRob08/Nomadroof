@@ -79,4 +79,21 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.asset_host = 'https://nomadroof.herokuapp.com'
+
+  # config.stripe.secret_key = Rails.application.secrets.stripe_publishable_key
+  # config.stripe.publishable_key = Rails.application.secrets.stripe_secret_key
+
+  config.action_mailer.default_url_options = { host: 'nomadroof.herokuapp.com'}
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.mailtrap.io',
+    port: 2525,
+    enable_starttls_auto: true,
+    user_name: '6cc65550457616',
+    password: '6de6c2c3042e53',
+    authentication: 'login'
+  }
 end
