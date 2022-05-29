@@ -14,7 +14,6 @@ gem 'jbuilder', '~> 2.11', '>= 2.11.5'
 gem 'sdoc', '~> 2.3', '>= 2.3.1', group: :doc
 
 gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
-gem 'bootstrap', '~> 4.0.0'
 gem 'sass-rails', '~> 6.0'
 
 gem 'devise', '~> 4.8', '>= 4.8.1'
