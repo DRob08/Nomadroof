@@ -10,13 +10,21 @@ class CheckoutController < ApplicationController
 
 		@session_stripe = Stripe::Checkout::Session.create({
      payment_method_types: ['card'],
+     metadata: {
+        reservation_id: @reservation.id,
+        property_id: @reservation.room_id,
+        owner_id: @reservation.owner_id,
+        user_id: @reservation.user_id,
+        user_email: current_user.email
+     },
+     customer_email: current_user.email,
 		 line_items: [{
 			 price_data: {
 				 currency: 'usd',
 				 product_data: {
 					 name: @room.listing_name,
 				 },
-				 unit_amount: 8000,
+				 unit_amount: (@reservation.total * 100).to_i,
 			 },
 			 quantity: 1,
 		 }],
