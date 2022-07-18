@@ -59,3 +59,5 @@ group :development, :test do
 end
 
 gem "cancancan", "~> 3.3"
+
+gem "noticed", "~> 1.5"

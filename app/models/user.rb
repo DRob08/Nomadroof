@@ -29,11 +29,20 @@ class User < ActiveRecord::Base
   has_many :reservations
   has_many :reviews
 
+  has_many :messages
+  has_many :notifications, as: :recipient
+
   belongs_to :role
 
   delegate :name, to: :role, prefix: true, allow_nil: true
 
   before_save :assign_role
+
+  after_create :send_admin_mail
+  
+  def send_admin_mail
+     ###Send email stuff here
+  end
 
   def admin?
     role.name == 'Admin'

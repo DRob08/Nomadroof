@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Reservation Confirmation Notification</h1>
+    <p>
+      You have confirmed property: <%= @reservation.room.listing_name %>.
+    </p>
+
+    <p>
+       Your reservation is now confirmed and your booking stay in this property is <%= @reservation.start_date.strftime("from %B %d, %Y") %>  <%= @reservation.end_date.strftime("to %B %d, %Y") %>
+    </p>
+
+    <p>
+      An initial payment for the first month's rent that confirms your booking has succeeded.
+    </p>
+    <p>
+      For more information about the booking, please follow this link: <a href="http://localhost:3000/your_trips"> My Bookings </a>.
+    </p>
+    <p>Have a great day!</p>
+
+    <p>Nomadroof team</p>
+  </body>
+</html>

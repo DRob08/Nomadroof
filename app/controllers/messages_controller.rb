@@ -12,10 +12,13 @@ class MessagesController < ApplicationController
 	end
 
 	def create
+		@other = current_user == @conversation.sender ? @conversation.recipient : @conversation.sender
 		@message = @conversation.messages.new(message_params)
 		@messages = @conversation.messages.order("created_at DESC")
 
 		if @message.save
+			#CommentNotification.with(message: @message).deliver_later(@other)
+			MessageNotification.with(message: @message).deliver_later(@other)
 			respond_to do |format|
 				format.js
 			end

@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   resources :rooms
   resources :photos
 
+  resources :webhooks, only: [:create]
+
   resources :rooms do
     resources :reservations, only: [:create, :destroy]
   end

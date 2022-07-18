@@ -15,6 +15,7 @@ class RoomsController < ApplicationController
 
     @reviews = @room.reviews
     @hasReview = @reviews.find_by(user_id: current_user.id) if current_user
+    
   end
 
   def new

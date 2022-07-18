@@ -8,4 +8,10 @@ class Message < ActiveRecord::Base
   	created_at.strftime("%v")
   end
 
+  after_create_commit :notify_user
+
+  def notify_user
+    #CommentNotification.with(message: self).deliver_later(User.all)
+  end
+
 end

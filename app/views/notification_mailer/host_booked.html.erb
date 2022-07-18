@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Reservation Confirmation Notification</h1>
+    <p>
+      Reservation has been confirmed for your listing:  <%= @reservation.room.listing_name %> by tenant: <%= @tenant.first_name %>.
+    </p>
+
+    <p>
+       Your property is now booked <%= @reservation.start_date.strftime("from %B %d, %Y") %>  <%= @reservation.end_date.strftime("to %B %d, %Y") %>
+    </p>
+    <p>
+      For more information about the reservation, please follow this link: <a href="http://localhost:3000/your_reservations"> My Reservations </a>.
+    </p>
+    <p>Have a great day!</p>
+
+    <p>Nomadroof team</p>
+  </body>
+</html>

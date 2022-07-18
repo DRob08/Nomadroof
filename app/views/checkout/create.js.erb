@@ -1,5 +1,5 @@
 var stripe = Stripe('<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>');
-alert ("This is an alert dialog box");
+//alert ("This is an alert dialog box");
 console.log("hitting strpe pub key = ", stripe);
 
 stripe.redirectToCheckout({

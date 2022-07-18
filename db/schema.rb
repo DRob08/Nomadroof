@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_17_190542) do
+ActiveRecord::Schema.define(version: 2022_06_29_192005) do
 
   create_table "amenities", force: :cascade do |t|
     t.string "name"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2022_05_17_190542) do
     t.integer "recipient_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "room_id"
+    t.index ["room_id"], name: "index_conversations_on_room_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -34,6 +36,18 @@ ActiveRecord::Schema.define(version: 2022_05_17_190542) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "recipient_type"
+    t.integer "recipient_id"
+    t.string "type", null: false
+    t.json "params"
+    t.datetime "read_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["read_at"], name: "index_notifications_on_read_at"
+    t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -150,6 +164,7 @@ ActiveRecord::Schema.define(version: 2022_05_17_190542) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
+  add_foreign_key "conversations", "rooms"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
   add_foreign_key "photos", "rooms"

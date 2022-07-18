@@ -45,6 +45,9 @@ Rails.application.configure do
 
   # config.stripe.secret_key = Rails.application.secrets.stripe_publishable_key
   # config.stripe.publishable_key = Rails.application.secrets.stripe_secret_key
+  #config.routes.default_url_options[:host] = 'localhost:3000'
+
+  config.mailer_sender = 'Tom @ Nomadroof <no-reply@nomadroof.com>'
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
