@@ -6,7 +6,9 @@ class WebhooksController < ApplicationController
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
     logger.debug "Sig header = #{sig_header}"
     event = nil
-    endpoint_secret = 'whsec_cb96809dfb811dae74258b4405895a9d50793398cb47bedd392eb47693167bcb'
+    # endpoint_secret = 'whsec_cb96809dfb811dae74258b4405895a9d50793398cb47bedd392eb47693167bcb'
+
+    endpoint_secret = ENV["STRIPE_WEBHOOK_SECRET"]
 
     begin
       event = Stripe::Webhook.construct_event(
